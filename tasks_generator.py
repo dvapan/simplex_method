@@ -4,7 +4,7 @@ import random
 import scipy as sc
 
 from simplex_method import solver
-
+import pprint
 min_val = -50
 max_val = 50
 
@@ -16,5 +16,5 @@ def generate_task(m,n):
     return A, b, c
 
 Task = generate_task(4, 4)
-print Task
+pprint.pprint(Task)
 print solver(Task[0], Task[1], Task[2], 0.01)
