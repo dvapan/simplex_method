@@ -18,10 +18,10 @@ import scipy.linalg as lin
 # _c[count_vars:, :] = sc.zeros((addition_vars, 1))
 
 
-# c = sc.matrix([1, 2, 3, -4]).transpose()
-# A = sc.matrix([[1, 1, -1, 1],
-#                [1, 14, 10, -10]])
-# b = sc.matrix([2, 24]).transpose()
+c = sc.matrix([1, 2, 3, -4]).transpose()
+A = sc.matrix([[1, 1, -1, 1],
+               [1, 14, 10, -10]])
+b = sc.matrix([2, 24]).transpose()
 
 def get_point_from_basis(A, b, I):
     B_sigma = A[:, I]
@@ -33,7 +33,8 @@ def get_point_from_basis(A, b, I):
 
 def simplex_method(A, b, c, I, eps):
     count_all_vars = A.shape[1]
-    while 1:
+    q = 50
+    while q > 0:
         B_sigma = A[:, I]
         c_sigma = c[I, :]
 
@@ -43,7 +44,7 @@ def simplex_method(A, b, c, I, eps):
         D = sc.matrix(A).transpose()*y - c
         non_base_I = [e for e in range(count_all_vars) if e not in I]
 
-
+        q-=1
         finish = reduce(lambda x, y: x and y, map(lambda x: x > -eps, D[non_base_I]), True)
 
         if finish:
@@ -59,7 +60,10 @@ def simplex_method(A, b, c, I, eps):
 
         tmp = (sc.array(x_sigma.transpose())[0]/sc.array(lmd_k)).tolist()
         s = tmp.index(min(tmp))
+        # print I, k, s, D.transpose().tolist()
+
         I[s] = k
+    return None,None,None
 
 
 def first_phase(A, b, c, eps):
@@ -78,11 +82,12 @@ def first_phase(A, b, c, eps):
 
 def solver(A, b, c, eps):
     Res = first_phase(A, b, c, eps)
+    #print Res
     if Res[2] < -eps:
         return None, None, None
     else:
         return simplex_method(A, b, c, Res[1], eps)
 
-#Res = simplex_method(_A, b, _c, I, 0.0001)
-#Res = first_phase(A, b, c, 0.0001)
-#print solver(A, b, c, 0.0001)
+# Res = simplex_method(_A, b, _c, I, 0.0001)
+# Res = first_phase(A, b, c, 0.0001)
+# print solver(A, b, c, 0.0001)
