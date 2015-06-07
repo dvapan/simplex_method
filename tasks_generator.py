@@ -16,9 +16,9 @@ def generate_task(m,n):
     c = sc.matrix([random.randint(min_val, max_val) for i in range(n)]).transpose()
     return A, b, c
 
-Task = generate_task(4, 4)
+Task = generate_task(3, 5)
 pprint.pprint(Task)
-print double_phase_simplex_method(Task[0], Task[1], Task[2], 0.01)
+#print double_phase_simplex_method(Task[0], Task[1], Task[2], 0.01)
 
 print "A:"
 print Task[0]

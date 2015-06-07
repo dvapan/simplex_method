@@ -84,7 +84,6 @@ def simplex_method(A, b, c, I, eps):
 
 
 def artificial_basis_method(A, b, c, eps):
-    # TODO В методе искуственного базиса в выводимом базисе заменить искусственные векторы на векторы из задачи
     count_vars = A.shape[1]
     addition_vars = A.shape[0]
     count_all_vars = count_vars + addition_vars
@@ -111,9 +110,9 @@ def artificial_basis_method(A, b, c, eps):
 
 def double_phase_simplex_method(A, b, c, eps):
     Res = artificial_basis_method(A, b, c, eps)
-    while Res[1] is not None and len(filter(lambda x: x >= A.shape[1], Res[1])) > 0:
-        print "NEED NEXT ITER OF FIRST PHASE"
-        Res = artificial_basis_method(A, b, c, eps, Res[1])
+    # while Res[1] is not None and len(filter(lambda x: x >= A.shape[1], Res[1])) > 0:
+    #     print "NEED NEXT ITER OF FIRST PHASE"
+    #     Res = artificial_basis_method(A, b, c, eps, Res[1])
     if Res[1] is not None:
         return simplex_method(A, b, c, Res[1], eps)
     else:
