@@ -3,7 +3,7 @@ __author__ = 'dvapan'
 import random
 import scipy as sc
 
-from simplex_method import solver
+from simplex_method import double_phase_simplex_method
 import pprint
 min_val = -50
 max_val = 50
@@ -17,4 +17,4 @@ def generate_task(m,n):
 
 Task = generate_task(4, 4)
 pprint.pprint(Task)
-print solver(Task[0], Task[1], Task[2], 0.01)
+print double_phase_simplex_method(Task[0], Task[1], Task[2], 0.01)
