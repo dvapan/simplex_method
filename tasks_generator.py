@@ -3,25 +3,22 @@ __author__ = 'dvapan'
 import random
 import scipy as sc
 
-from simplex_method import *
+from simplex_method import double_phase_simplex_method
 
-min_val = -20
-max_val = 20
+import pprint
+min_val = -50
+max_val = 50
 
-def generate_task(m, n):
-    A = sc.matrix([[float(random.randint(min_val, max_val))
+def generate_task(m,n):
+    A = sc.matrix([[random.randint(min_val, max_val)
          for i in range(n)] for j in range(m)])
-    b = sc.matrix([float(random.randint(1, max_val)) for i in range(m)]).transpose()
-    c = sc.matrix([float(random.randint(min_val, max_val)) for i in range(n)]).transpose()
+    b = sc.matrix([random.randint(1, max_val) for i in range(m)]).transpose()
+    c = sc.matrix([random.randint(min_val, max_val) for i in range(n)]).transpose()
     return A, b, c
 
-if random.random() > 0.5:
-    c *= random.randint(1, max_val)
-    b *= random.randint(1, max_val)
-    A *= random.randint(1, max_val)
-    Task = A, b, c
-else:
-    Task = generate_task(2, 4)
+Task = generate_task(4, 4)
+pprint.pprint(Task)
+print double_phase_simplex_method(Task[0], Task[1], Task[2], 0.01)
 
 print "A:"
 print Task[0]
@@ -29,7 +26,7 @@ print "b:"
 print Task[1]
 print "c:"
 print Task[2]
-Res = solver(Task[0], Task[1], Task[2], 0.0001)
+Res = double_phase_simplex_method(Task[0], Task[1], Task[2], 0.0001)
 print "###########"
 if Res[0] != None:
     print "x:"
